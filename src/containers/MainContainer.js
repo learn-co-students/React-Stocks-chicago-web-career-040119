@@ -37,12 +37,21 @@ class MainContainer extends Component {
    }
  }
 
+ handleRadio = event => {
+   this.setState({
+     sortBy: event.target.value
+   })
+ }
+
 
 
   render() {
     return (
       <div>
-        <SearchBar/>
+        <SearchBar
+          sortBy={this.state.sortBy}
+          handleRadio={this.handleRadio}
+        />
 
           <div className="row">
             <div className="col-8">

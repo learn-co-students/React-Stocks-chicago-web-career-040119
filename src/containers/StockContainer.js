@@ -9,6 +9,7 @@ class StockContainer extends Component {
         <h2>Stocks</h2>
         {
           //render the list of stocks here
+          this.props.stocks.map(stock => <Stock stock={stock} buyStocks={this.props.buyStocks} sellStock={this.props.sellStock} parent={this.props.parent}/> )
         }
       </div>
     );

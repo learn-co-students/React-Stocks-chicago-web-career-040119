@@ -5,6 +5,40 @@ import SearchBar from '../components/SearchBar'
 
 class MainContainer extends Component {
 
+  state= {
+    stocks : [],
+    myStocks: [],
+    sortBy: '',
+    filter: ""
+  }
+
+  componentDidMount() {
+    fetch("http://localhost:3000/stocks")
+    .then(r => r.json())
+    .then(stocks =>
+      this.setState({
+        stocks: stocks,
+      })
+    )
+  }
+
+  buyStocks = (stock) => {
+    this.setState({
+      myStocks: [...this.state.myStocks, stock]
+    })
+  }
+
+ sellStock = (stock) => {
+   if (this.state.myStocks.includes(stock)) {
+     let newStocks = this.state.myStocks.filter( s => s !== stock)
+       this.setState({
+         myStocks : newStocks
+       })
+   }
+ }
+
+
+
   render() {
     return (
       <div>
@@ -13,12 +47,21 @@ class MainContainer extends Component {
           <div className="row">
             <div className="col-8">
 
-              <StockContainer/>
+              <StockContainer
+                stocks={this.state.stocks}
+                buyStocks={this.buyStocks}
+                sellStock={this.sellStock}
+                parent="stocks"
+              />
 
             </div>
             <div className="col-4">
 
-              <PortfolioContainer/>
+              <PortfolioContainer
+                stocks={this.state.myStocks}
+                sellStock={this.sellStock}
+                parent="portfolio"
+              />
 
             </div>
           </div>

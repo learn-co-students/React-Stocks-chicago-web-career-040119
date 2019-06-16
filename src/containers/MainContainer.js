@@ -56,29 +56,31 @@ class MainContainer extends Component {
  }
 
 
- chooseStocks = () => {
+  chooseStocks = () => {
    //////for dropdown selection filtering////
-   console.log(this.state.filters.type)
-   console.log(this.state.sortBy)
+     console.log(this.state.filters.type)
+     console.log(this.state.sortBy)
 
-   let tempStocks = [...this.state.stocks]
+     let tempStocks = [...this.state.stocks]
 
-    if (this.state.filters.type === "All") {
-      return tempStocks
-     }
-     else {
-       return tempStocks = tempStocks.filter(stock => stock.type === this.state.filters.type
-     )}
+      //filters dropdown /////
+      if (this.state.filters.type === "All") {
+        return tempStocks
+       }
+       else {
+         return tempStocks = tempStocks.filter(stock => stock.type === this.state.filters.type
+       )}
 
-    if (this.sate.sortBy === "Alphabetically") {
-      return tempStocks.sort((stockA, stockB) => stockA.name.localeCompare(stockB.name))
-    }
-    else if(this.state.sortBy === "Price"){
-      return tempStocks.sort((stockA, stockB) => stockA.price - stockB.price)
-    } else{
-      return tempStocks
-    }
- }
+      //////////radio select ///////
+       if (this.state.sortBy === "Alphabetically") {
+         return tempStocks.sort((stockA, stockB) => (stockA.name >stockB.name) ? 1: -1)
+       }
+        else if(this.state.sortBy === "Price"){
+          return tempStocks.sort((stockA, stockB) => (stockA.price > stockB.price) ? 1 : -1)
+       } else{
+          return tempStocks
+       }
+  }
 
 
   render() {

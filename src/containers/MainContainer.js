@@ -25,17 +25,19 @@ class MainContainer extends Component {
 
   //when click on stock add it to myPortofolio
   addToPortofolio =(stock)=> {
-    let newSelectedStocks = [...this.state.myPortofolio, stock]
-    this.setState({
-      myPortofolio: newSelectedStocks
-    })
+    if (!this.state.myPortofolio.includes(stock)) {
+      let newSelectedStocks = [...this.state.myPortofolio, stock]
+      this.setState({
+        myPortofolio: newSelectedStocks
+      })
+    }
   }
 
   removeFromPortofolio =(stock)=> {
     if (this.state.myPortofolio.includes(stock)) {
-    let filterAndRemove = this.state.myPortofolio.filter(s => s !== stock)
+      let filtered = this.state.myPortofolio.filter(s => s!==stock)
       this.setState({
-        myPortofolio: filterAndRemove
+        myPortofolio: filtered
       })
     }
   }
@@ -66,7 +68,7 @@ class MainContainer extends Component {
     if (this.state.sortBy === "Alphabetically") {
       return selectedStocks.sort((firstStock, secondStock) => {if (firstStock.name < secondStock.name) {return -1}
                                                               if (firstStock.name > secondStock.name) {return 1}
-                                                            return 0})
+                                                              return 0})
     } else if (this.state.sortBy === "Price"){
       return selectedStocks.sort((firstStock, secondStock) => firstStock.price - secondStock.price)
     } else {
@@ -88,9 +90,9 @@ class MainContainer extends Component {
             <div className="col-8">
 
               <StockContainer
+              //stocks={this.state.stocks}
                 stocks={this.selectStock()}
                 addToPortofolio={this.addToPortofolio}
-                removeFromPortofolio={this.removeFromPortofolio}
               />
 
             </div>

@@ -9,7 +9,9 @@ class MainContainer extends Component {
     stocks : [],
     myStocks: [],
     sortBy: '',
-    filter: ""
+    filters: {
+      type: "All"
+    }
   }
 
   componentDidMount() {
@@ -37,27 +39,65 @@ class MainContainer extends Component {
    }
  }
 
+///////radio event listener///////
  handleRadio = event => {
    this.setState({
      sortBy: event.target.value
    })
  }
 
+/////filtering event listener ///////
+
+ handleFilter = (e) => {
+   this.setState({
+     filters : {
+       type: e.target.value}
+     })
+ }
+
+
+ chooseStocks = () => {
+   //////for dropdown selection filtering////
+   console.log(this.state.filters.type)
+   console.log(this.state.sortBy)
+
+   let tempStocks = [...this.state.stocks]
+
+    if (this.state.filters.type === "All") {
+      return tempStocks
+     }
+     else {
+       return tempStocks = tempStocks.filter(stock => stock.type === this.state.filters.type
+     )}
+
+    if (this.sate.sortBy === "Alphabetically") {
+      return tempStocks.sort((stockA, stockB) => stockA.name.localeCompare(stockB.name))
+    }
+    else if(this.state.sortBy === "Price"){
+      return tempStocks.sort((stockA, stockB) => stockA.price - stockB.price)
+    } else{
+      return tempStocks
+    }
+ }
 
 
   render() {
+
     return (
       <div>
         <SearchBar
           sortBy={this.state.sortBy}
           handleRadio={this.handleRadio}
+          handleFilter={this.handleFilter}
+          filters={this.state.filters}
+          value={this.state.filters.type}
         />
 
           <div className="row">
             <div className="col-8">
 
               <StockContainer
-                stocks={this.state.stocks}
+                stocks={this.chooseStocks()}
                 buyStocks={this.buyStocks}
                 sellStock={this.sellStock}
                 parent="stocks"

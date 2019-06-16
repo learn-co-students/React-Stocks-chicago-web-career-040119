@@ -68,7 +68,8 @@ class MainContainer extends Component {
         return tempStocks
        }
        else {
-         return tempStocks = tempStocks.filter(stock => stock.type === this.state.filters.type
+         return tempStocks = tempStocks.filter(stock => stock.type.includes(this.state.filters.type)
+    //OR same as:   tempStocks = tempStocks.filter(stock => stock.type === this.state.filters.type  /////
        )}
 
       //////////radio select ///////
